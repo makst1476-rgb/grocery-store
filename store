@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "rus");
+
+    string products[10] = { "milk", "cheese", "bread", "burger", "shaurma",
+                          "pelmeni", "cucumber", "tomato", "water", "cola" };
+    double prices[10] = { 80, 200, 50, 150, 180, 120, 60, 70, 40, 90 };
+    int quantities[10] = { 0 };
+    double total = 0;
+
+    cout << "=== МАГАЗИН ===" << endl;
+    cout << "Доступные продукты: " ;    
+    cout << "\nВведите STOP для завершения покупок" << endl;
+
+    for (int i = 0; i < 10; i++)
+    {
+       cout << endl << products[i] << "(" << prices[i] << " руб) " ;
+    }
+
+ 
+    while (true)
+    {
+        cout << "\nВведите название продукта: ";        string choice;
+        cin >> choice;
+        double discount = 0;
+
+        if (choice == "STOP")
+        {
+
+            if (total > 500)
+            {
+                discount += 5;
+            }
+            for (int i = 0;i < 10;i++)
+            {
+                if (quantities[i] >= 5)
+                {
+                    discount+=5;
+                }
+            }
+
+            cout << "\n=== ИТОГОВЫЙ ЧЕК ===" << endl;
+            cout << "Общая сумма: " << total << " руб" << endl;
+            cout << "Скидка: " << discount << "%" << endl;
+            cout << "Итого к оплате: " << total * (1 - discount / 100) << " руб" << endl;
+            break;
+        }
+
+        int productIndex = -1;
+        for (int i = 0; i < 10; i++)
+        {
+            if (products[i] == choice)
+            {
+                productIndex = i;
+                break;
+            }
+        }
+
+        if (productIndex == -1)
+        {
+            cout << " Этот продукт не найден" << endl;
+            continue;
+        }
+
+        int quantity;
+        cout << "Введите количество: ";
+        cin >> quantity;
+        
+
+        if (quantity < 1)
+        {
+            cout << "Столько товара нельзя купить" << endl;
+            continue;
+        }
+
+        total += prices[productIndex] * quantity;
+        quantities[productIndex] += quantity;
+    }
+}
+	
+	
